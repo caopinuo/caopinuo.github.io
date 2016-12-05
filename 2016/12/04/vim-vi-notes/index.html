@@ -1,51 +1,461 @@
-extends base
+<!DOCTYPE html>
 
-block title
-  title= page.title + ' | ' + config.title
 
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-    if theme.duoshuo
-      a.ds-thread-count(data-thread-key=page.path, href=url_for(page.path) + '#comments')
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content)
-    .post-content
-      != page.content
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url='#{page.permalink}', data-id='#{page._id}')= __('shareto')
-    include _partial/tag
-    include _partial/post_nav
-    if theme.duoshuo
-      div(class='ds-share flat' data-thread-key=page.path, data-title=page.title, data-url=page.permalink)
-         .ds-share-inline
-            ul.ds-share-icons-16
-              li(data-toggle='ds-share-icons-more')
-                a(class='ds-more' href='javascript:void(0);') 分享到：
-              li
-                a(class='ds-weibo' href='javascript:void(0);' data-service='weibo') 微博
-              li
-                a(class='ds-qzone' href='javascript:void(0);' data-service='qzone') QQ空间
-              li
-                a(class='ds-qqt' href='javascript:void(0);' data-service='qqt') 腾讯微博
-              li
-                a(class='ds-wechat' href='javascript:void(0);' data-service='wechat') 微信
-            .ds-share-icons-more
-    include _partial/comments
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>vim/vi notes | caopinuo&#39;s blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
+  
+
+  <meta name="description" content="在日常工作过程中，不可避免的要处理一些Linux下的文本编辑。为了一时的方便，总是习惯将Linux文件以samba的方式，交给UE/nodepad++等Windows编辑器处理。其主要原因是对vi/vim编辑器命令不太熟悉，本文目的是在工作当中用到的vi命令记录下来，方便自己随时查阅。后续遇到比较有用的命令也随时更新记录到此。 
+
+日常很常用的命令记录总有一些命令使用非常频繁，记录到文章开头处，便">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim/vi notes">
+<meta property="og:url" content="http://yoursite.com/2016/12/04/vim-vi-notes/index.html">
+<meta property="og:site_name" content="caopinuo's blog">
+<meta property="og:description" content="在日常工作过程中，不可避免的要处理一些Linux下的文本编辑。为了一时的方便，总是习惯将Linux文件以samba的方式，交给UE/nodepad++等Windows编辑器处理。其主要原因是对vi/vim编辑器命令不太熟悉，本文目的是在工作当中用到的vi命令记录下来，方便自己随时查阅。后续遇到比较有用的命令也随时更新记录到此。 
+
+日常很常用的命令记录总有一些命令使用非常频繁，记录到文章开头处，便">
+<meta property="og:updated_time" content="2016-12-05T05:28:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim/vi notes">
+<meta name="twitter:description" content="在日常工作过程中，不可避免的要处理一些Linux下的文本编辑。为了一时的方便，总是习惯将Linux文件以samba的方式，交给UE/nodepad++等Windows编辑器处理。其主要原因是对vi/vim编辑器命令不太熟悉，本文目的是在工作当中用到的vi命令记录下来，方便自己随时查阅。后续遇到比较有用的命令也随时更新记录到此。 
+
+日常很常用的命令记录总有一些命令使用非常频繁，记录到文章开头处，便">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#日常很常用的命令记录"><span class="toc-text">日常很常用的命令记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#光标的移动"><span class="toc-text">光标的移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复制-粘贴-删除"><span class="toc-text">复制 粘贴 删除</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-vim-vi-notes" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">vim/vi notes</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>caopinuo</span>
+        </span>
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://www.forsigner.com/2016/12/04/vim-vi-notes/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>在日常工作过程中，不可避免的要处理一些Linux下的文本编辑。为了一时的方便，总是习惯将Linux文件以samba的方式，交给UE/nodepad++等Windows编辑器处理。其主要原因是对<strong>vi/vim</strong>编辑器命令不太熟悉，本文目的是在工作当中用到的vi命令记录下来，方便自己随时查阅。后续遇到比较有用的命令也随时更新记录到此。 </p>
+<hr>
+<h3 id="日常很常用的命令记录"><a href="#日常很常用的命令记录" class="headerlink" title="日常很常用的命令记录"></a>日常很常用的命令记录</h3><p>总有一些命令使用非常频繁，记录到文章开头处，便于查找：</p>
+<ul>
+<li><code>0</code> : line home.</li>
+<li><code>$</code> : line end.</li>
+<li><code>gg</code>: doc home.</li>
+<li><code>G</code> : doc end.</li>
+<li><code>u</code>:  undo</li>
+<li><code>ctr + r</code>: redo</li>
+<li><code>:set nu</code>: 显示行号</li>
+<li><code>123gg</code>:  跳转到123行</li>
+</ul>
+<hr>
+<h3 id="光标的移动"><a href="#光标的移动" class="headerlink" title="光标的移动"></a>光标的移动</h3><p>normal模式下：</p>
+<ul>
+<li><code>0</code> : 移动到光标的本行开头.</li>
+<li><code>$</code> : 移动到光标的本行的结尾.</li>
+<li><code>H</code> : 移动光标到屏幕的首行.</li>
+<li><code>M</code> : 移动光标到屏幕的中间一行.</li>
+<li><code>L</code> : 移动光标到屏幕的尾行.</li>
+<li><code>gg</code>: 移动光标到文档首行.</li>
+<li><code>G</code> : 移动光标到文档尾行.</li>
+<li><code>w(e)</code>:移动光标到下一个单词.</li>
+</ul>
+<hr>
+<h3 id="复制-粘贴-删除"><a href="#复制-粘贴-删除" class="headerlink" title="复制 粘贴 删除"></a>复制 粘贴 删除</h3><p>y、p、d分别表示复制、粘贴、删除，通常可以与移动光标命令组合使用，在normal模式下：</p>
+<ul>
+<li><code>yy</code> : 拷贝光标所在的行</li>
+<li><code>p</code>  : 粘贴操作</li>
+<li><code>dd</code> : 删除光标所在的行</li>
+<li><code>yw</code> : 拷贝从当前光标到光标所在单词结尾的内容.</li>
+<li><code>dw</code> : 删除从当前光标到光标所在单词结尾的内容.</li>
+<li><code>y0</code> : 拷贝从当前光标到光标所在行首的内容.</li>
+<li><code>d0</code> : 删除从当前光标到光标所在行首的内容.</li>
+<li>未完待续</li>
+</ul>
+<hr>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://yoursite.com/2016/12/04/vim-vi-notes/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
