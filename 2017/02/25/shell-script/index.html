@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="null"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="The palest ink is better than the best memory ！"><title>shell脚本基础 | Caopinuo's blog</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">shell脚本基础</h1><a id="logo" href="/.">Caopinuo's blog</a><p class="description">To be coding with big tao forever ！</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">shell脚本基础</h1><div class="post-meta">Feb 25, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><h3 id="shell脚本格式"><a href="#shell脚本格式" class="headerlink" title="shell脚本格式"></a>shell脚本格式</h3><p>在shell脚本里，井号（#）用作注释行，第一行为特例，井号加叹号<code>（#！/bin/bash）</code>,指定用哪个shell运行本脚本。</p>
+<pre><code>#!/bin/bash
+#This script echo hello world
+echo “hello world !”
+</code></pre><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>set命令可以显示完整的活动环境变量；在shell脚本中，允许定义和使用自己的变量。</p>
+<ul>
+<li><strong>环境变量</strong>： shell脚本中使用环境变量需要在名称之前加一个美元符号($)，如<code>$HOME</code>或者<code>${HOME}</code>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$$</td>
+<td>shell本身的PID</td>
+<td></td>
+</tr>
+<tr>
+<td>$!</td>
+<td>shell最后运行的后台PID</td>
+<td></td>
+</tr>
+<tr>
+<td>$?</td>
+<td>shell最后运行的命令结束的返回值</td>
+<td></td>
+</tr>
+<tr>
+<td>$*</td>
+<td>shell所有输入参数列表</td>
+<td></td>
+</tr>
+<tr>
+<td>$@</td>
+<td>shell所有输入参数列表</td>
+<td></td>
+</tr>
+<tr>
+<td>$#</td>
+<td>shell所有输入参数的个数</td>
+<td></td>
+</tr>
+<tr>
+<td>$0</td>
+<td>shell本身的文件名</td>
+<td></td>
+</tr>
+<tr>
+<td>$1~$n</td>
+<td>shell各个输入参数，$1第一个入参…</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>用户变量</strong>：用户变量使用需要遵循以下规则，<ol>
+<li>变量名为不超过20个字母，数字，下划线的字符串。</li>
+<li>shell脚本会自动决定变量值的数据类型，并且变量名区分大小写。 </li>
+<li>通过等号赋值给变量，变量、等号和值之间不能出现空格。</li>
+<li>脚本的整个生命周期，变量一直保持其值，直到脚本完成时被删除。</li>
+<li>引用一个变量值时需要使用($)符号，引用变量对其赋值则不用使用美元符号，如<code>value2=$value1</code>。</li>
+</ol>
+</li>
+</ul>
+<h3 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h3><ul>
+<li>整数运算： 将要运算的数学表达式用（$[ 表达式 ]）的形式圈起来，如<code>var=$[100/23]</code>。</li>
+<li>浮点数运算：</li>
+</ul>
+<h3 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h3><h3 id="shell脚本常用特性"><a href="#shell脚本常用特性" class="headerlink" title="shell脚本常用特性"></a>shell脚本常用特性</h3><ul>
+<li><strong>反引号</strong>： （`）可以将shell命令的输出赋给变量。如<strong><em>test=`date`</em></strong>。</li>
+</ul>
+<hr>
+<p>未完待续…</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2017/02/25/shell-script/" data-id="cizlf54hx000796tjbuwnpztw" class="article-share-link">Aktie</a><div class="tags"></div><div class="post-nav"><a href="/2017/02/25/hello-world/" class="pre">Hello World</a><a href="/2017/02/14/linux-common-skills/" class="next">linux common skills</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/技术/" style="font-size: 15px;">技术</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/shell-script/">shell脚本基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/linux-common-skills/">linux common skills</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/linux-kernel-mechanism/">linux-kernel-mechanism</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/internal-work/">internal-work</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/data-structure/">data-structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/os-com-sense/">os-com-sense</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/Tree/">Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/09/task-struct/">进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/19/Git-learn/">Git learn</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Caopinuo's blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
