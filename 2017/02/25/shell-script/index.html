@@ -72,8 +72,24 @@ var=$[100/23]  #将要运算的数学表达式用（$[ 表达式 ]）的形式�
 var=\`echo &quot;scale=4; 3.1415/4&quot; | bc\`
 </code></pre></li>
 </ul>
-<h3 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h3><p>if-then语句格式：<br>        if cmd1       #cmd1会被执行<br>        then<br>            cmd2      #cmd1退出码为0(成功)，cmd2才会执行<br>        fi<br>也可以写为：<br>        if cmd1; then<br>                   cmd2<br>                fi<br>当然还有嵌套形式：<br>        if cmd1<br>        then<br>           cmd2<br>        elif cmd3     #cmd3会被执行<br>        then<br>           cmd4<br>        fi</p>
-<h3 id="shell脚本常用特性"><a href="#shell脚本常用特性" class="headerlink" title="shell脚本常用特性"></a>shell脚本常用特性</h3><ul>
+<h3 id="结构化命令"><a href="#结构化命令" class="headerlink" title="结构化命令"></a>结构化命令</h3><p>if-then语句格式：</p>
+<pre><code>if cmd1       #cmd1会被执行
+then
+    cmd2      #cmd1退出码为0(成功)，cmd2才会执行
+fi
+</code></pre><p>也可以写为：</p>
+<pre><code>if cmd1; then
+           cmd2
+        fi
+</code></pre><p>当然还有嵌套形式：</p>
+<pre><code>if cmd1
+then
+   cmd2
+elif cmd3     #cmd3会被执行
+then
+   cmd4
+fi
+</code></pre><h3 id="shell脚本常用特性"><a href="#shell脚本常用特性" class="headerlink" title="shell脚本常用特性"></a>shell脚本常用特性</h3><ul>
 <li><strong>反引号</strong>： （`）可以将shell命令的输出赋给变量。如<strong><em>test=`date`</em></strong>。</li>
 <li><p><strong>重定向</strong>： 大于号<code>(&gt;)</code>将输出发到文件，<code>（&gt;&gt;）</code>双大于号则是追加；相反，小于号<code>（&lt;）</code>将文件内容输入到命令，双小于号为<em>内联输入重定向</em>。</p>
 <pre><code>root:testshell# bc &lt;&lt; EOF #并不一定要使用EOF环境变量
@@ -81,10 +97,65 @@ var=\`echo &quot;scale=4; 3.1415/4&quot; | bc\`
 &gt; 12.5/3
 &gt; EOF                     #开始和结尾字符串必须一致
 4.1666
-</code></pre><h3 id="脚本退出"><a href="#脚本退出" class="headerlink" title="脚本退出"></a>脚本退出</h3><p>一个执行的命令的退出的状态码用<code>$?</code>变量表示，最大转态码不超过255,如下：<br>状态码|描述|<br>—   |— |<br>0     |命令成功结束|<br>1     |通用未知错误|<br>2     |误用shell命令|<br>126   |命令不可执行|<br>127   |没找到命令|<br>128   |无效退出参数|<br>128+x |linux信号x的严重错误|<br>130   |命令通过CTR+C终止|<br>255   |退出状态码越界|</p>
-</li>
+</code></pre></li>
 </ul>
+<h3 id="脚本退出"><a href="#脚本退出" class="headerlink" title="脚本退出"></a>脚本退出</h3><p>一个执行的命令的退出的状态码用<code>$?</code>变量表示，最大转态码不超过255,如下：</p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>命令成功结束</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>通用未知错误</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>误用shell命令</td>
+<td></td>
+</tr>
+<tr>
+<td>126</td>
+<td>命令不可执行</td>
+<td></td>
+</tr>
+<tr>
+<td>127</td>
+<td>没找到命令</td>
+<td></td>
+</tr>
+<tr>
+<td>128</td>
+<td>无效退出参数</td>
+<td></td>
+</tr>
+<tr>
+<td>128+x</td>
+<td>linux信号x的严重错误</td>
+<td></td>
+</tr>
+<tr>
+<td>130</td>
+<td>命令通过CTR+C终止</td>
+<td></td>
+</tr>
+<tr>
+<td>255</td>
+<td>退出状态码越界</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>shell脚本默认情况下以最后一个命令的执行状态码退出，也可使用exit命令指定退出状态码，超过255，以255取模。</p>
 <hr>
 <p>未完待续…</p>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2017/02/25/shell-script/" data-id="ciznz89va000g6mtjtfohnevu" class="article-share-link">Aktie</a><div class="tags"></div><div class="post-nav"><a href="/2017/02/27/hello-world/" class="pre">Hello World</a><a href="/2017/02/14/linux-common-skills/" class="next">linux common skills</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/技术/" style="font-size: 15px;">技术</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/27/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/shell-script/">shell脚本基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/linux-common-skills/">linux common skills</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/linux-kernel-mechanism/">linux-kernel-mechanism</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/internal-work/">internal-work</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/data-structure/">data-structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/os-com-sense/">os-com-sense</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/Tree/">Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/09/task-struct/">进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/19/Git-learn/">Git learn</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Caopinuo's blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2017/02/25/shell-script/" data-id="cizo28dg7000gjdtjd4wjvejl" class="article-share-link">Aktie</a><div class="tags"></div><div class="post-nav"><a href="/2017/02/27/hello-world/" class="pre">Hello World</a><a href="/2017/02/14/linux-common-skills/" class="next">linux common skills</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/杂记/">杂记</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/技术/" style="font-size: 15px;">技术</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/27/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/shell-script/">shell脚本基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/linux-common-skills/">linux common skills</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/linux-kernel-mechanism/">linux-kernel-mechanism</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/internal-work/">internal-work</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/data-structure/">data-structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/os-com-sense/">os-com-sense</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/22/Tree/">Tree</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/09/task-struct/">进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/19/Git-learn/">Git learn</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Caopinuo's blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
